@@ -8,7 +8,7 @@ exports.up = function(knex) {
           .unique()
           .notNullable();
 
-        tbl.text('description')
+        tbl.text('project_description')
           .notNullable();
 
         tbl.boolean('completed')
@@ -17,7 +17,7 @@ exports.up = function(knex) {
       .createTable('actions', tbl => {
         tbl.increments();
 
-        tbl.text('description')
+        tbl.text('action_description')
           .notNullable();
 
         tbl.text('notes');
