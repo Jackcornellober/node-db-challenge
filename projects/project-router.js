@@ -96,4 +96,39 @@ router.put('/:id', async (req, res) => {
     }
   });
 
+  router.put('/actions/:id', async (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+  
+    try {
+      const action = await Projects.findAction(id);
+  
+      if (action) {
+        const updatedAction = await Actions.updateAction(changes, id);
+        res.json(updatedAction);
+      } else {
+        res.status(404).json({ message: 'Could not find action with given id' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Failed to update action' });
+    }
+  });
+  
+  router.delete('/actions/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const deleted = await Projects.removeAction(id);
+  
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res.status(404).json({ message: 'Could not find action with given id' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Failed to delete action' });
+    }
+  });
+
+
 module.exports = router;

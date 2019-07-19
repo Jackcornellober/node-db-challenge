@@ -30,7 +30,7 @@ function findProject(id) {
 }
 
 function findAction(id) {
-    return db('action')
+    return db('actions')
     .where({ id })
     .then(action => {
         if (action) {
