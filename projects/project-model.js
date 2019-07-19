@@ -3,9 +3,14 @@ const db = require('../data/db-config.js');
 module.exports = {
   find,
   findProject,
+  findAction,
   findActions,
   addAction,
   addProject,
+  updateProject,
+  removeProject,
+  updateAction,
+  removeAction
 };
 
 function find() {
@@ -18,6 +23,18 @@ function findProject(id) {
     .then(project => {
         if (project) {
           return project;
+        } else {
+          return null;
+        }
+      });
+}
+
+function findAction(id) {
+    return db('action')
+    .where({ id })
+    .then(action => {
+        if (action) {
+          return action;
         } else {
           return null;
         }
@@ -53,3 +70,59 @@ function addAction(action, id) {
       return findProject(arrayOfIds[0])
   })
 }
+
+///STRETCH///
+
+function updateProject(changes,id) {
+    return db('projects')
+      .where({ id: id })
+      .update( changes )
+      .then( (ifUpdated) => {
+          if (ifUpdated) {
+              return findProject(id)
+          } else {
+              return null
+          }
+      })
+  }
+  
+  function removeProject(id) {
+    const deletedProject = findProject(id)
+    return db('projects')
+      .where({ id: id })
+      .del()
+      .then ( (ifDeleted) => {
+          if (ifDeleted) {
+              return deletedProject
+          } else {
+              return null
+          }
+      })
+  }
+
+  function updateAction(changes,id) {
+    return db('actions')
+      .where({ id: id })
+      .update( changes )
+      .then( (ifUpdated) => {
+          if (ifUpdated) {
+              return findAction(id)
+          } else {
+              return null
+          }
+      })
+  }
+  
+  function removeAction(id) {
+    const deletedAction = findAction(id)
+    return db('actions')
+      .where({ id: id })
+      .del()
+      .then ( (ifDeleted) => {
+          if (ifDeleted) {
+              return deletedAction
+          } else {
+              return null
+          }
+      })
+  }

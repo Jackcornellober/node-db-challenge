@@ -60,4 +60,40 @@ router.post('/:id/actions', async (req, res) => {
   }
 });
 
+///STRETCH///
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+  
+    try {
+      const project = await Projects.findProject(id);
+  
+      if (project) {
+        const updatedProject = await Projects.updateProject(changes, id);
+        res.json(updatedProject);
+      } else {
+        res.status(404).json({ message: 'Could not find project with given id' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Failed to update project' });
+    }
+  });
+  
+  router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const deleted = await Projects.removeProject(id);
+  
+      if (deleted) {
+        res.json({ removed: deleted });
+      } else {
+        res.status(404).json({ message: 'Could not find project with given id' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Failed to delete project' });
+    }
+  });
+
 module.exports = router;
