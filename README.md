@@ -33,9 +33,20 @@ This will be akin to the Web API that you built in the last sprint, only this ti
 Demonstrate your understanding of this week's concepts by answering the following free-form questions. Edit this document to include your answers after each question. Make sure to leave a blank line above and below your answer so it is clear and easy to read by your project manager.
 
 1. Explain the difference between `Relational Databases` and `SQL`.
+
+SQL is a system for managing relational databases.
+
 1. Why do tables need a `primary key`?
+
+So that there is something for them to be referenced by that will never change. (usually)
+
 1. What is the name given to a table column that references the primary key on another table.
+
+Foreign Key
+
 1. What do we need in order to have a _many to many_ relationship between two tables.
+
+If you have a many to many relationship, create a third table with foreign keys pointing to both of the original tables.
 
 ## Project Set Up
 
