@@ -79,7 +79,25 @@ router.put('/:id', async (req, res) => {
       res.status(500).json({ message: 'Failed to update project' });
     }
   });
+
+  router.put('/actions/:id', async (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
   
+    try {
+      const action = await Projects.findAction(id);
+  
+      if (action) {
+        const updatedAction = await Projects.updateAction(changes, id);
+        res.json(updatedAction);
+      } else {
+        res.status(404).json({ message: 'Could not find action with given id' });
+      }
+    } catch (err) {
+      res.status(500).json({ message: 'Failed to update action' });
+    }
+  });
+
   router.delete('/:id', async (req, res) => {
     const { id } = req.params;
   
@@ -96,23 +114,7 @@ router.put('/:id', async (req, res) => {
     }
   });
 
-  router.put('/actions/:id', async (req, res) => {
-    const { id } = req.params;
-    const changes = req.body;
-  
-    try {
-      const action = await Projects.findAction(id);
-  
-      if (action) {
-        const updatedAction = await Actions.updateAction(changes, id);
-        res.json(updatedAction);
-      } else {
-        res.status(404).json({ message: 'Could not find action with given id' });
-      }
-    } catch (err) {
-      res.status(500).json({ message: 'Failed to update action' });
-    }
-  });
+
   
   router.delete('/actions/:id', async (req, res) => {
     const { id } = req.params;
